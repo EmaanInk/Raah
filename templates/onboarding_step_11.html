@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Raah — Step 11{% endblock %}
+
+{% block content %}
+<main class="landing">
+  <section class="hero-card">
+    <span class="brand-pill">Step 11 of 12</span>
+
+    <img
+      src="{{ url_for('static', filename='images/Riruru_thinking.svg') }}"
+      alt="Riruru thinking"
+      class="riruru"
+    />
+
+    <h1>How should Riruru guide you?</h1>
+    <p class="subtitle">Riruru will adjust according to you</p>
+
+    {% if error %}
+      <p class="small-note error-text">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST" action="/onboarding/step-11">
+      <div class="form-stack">
+        <select name="guidance_tone" class="form-control" required>
+          <option value="">Select one</option>
+          <option value="gentle">Gentle — no guilt, just encouragement</option>
+          <option value="balanced">Balanced — friendly but honest</option>
+          <option value="direct">Direct — give me deadlines and hold me to them</option>
+        </select>
+
+        <button class="btn-primary" type="submit">Continue</button>
+      </div>
+    </form>
+  </section>
+</main>
+{% endblock %}

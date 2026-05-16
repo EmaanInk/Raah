@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Raah — Step 10{% endblock %}
+
+{% block content %}
+<main class="landing">
+  <section class="hero-card">
+    <span class="brand-pill">Step 10 of 12</span>
+
+    <img
+      src="{{ url_for('static', filename='images/Riruru_happy.svg') }}"
+      alt="Riruru happy"
+      class="riruru"
+    />
+
+    <h1>What helps you stay consistent?</h1>
+    <p class="subtitle">This is to learn your pace.</p>
+
+    {% if error %}
+      <p class="small-note error-text">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST" action="/onboarding/step-10">
+      <div class="form-stack">
+        <select name="consistency_style" class="form-control" required>
+          <option value="">Select one</option>
+          <option value="weekly">Weekly checklists</option>
+          <option value="milestones">Project milestones</option>
+          <option value="daily">Short daily tasks</option>
+          <option value="deadline">Having a deadline</option>
+          <option value="no-idea">I don't know yet</option>
+        </select>
+
+        <button class="btn-primary" type="submit">Continue</button>
+      </div>
+    </form>
+  </section>
+</main>
+{% endblock %}

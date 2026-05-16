@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Raah — Step 6{% endblock %}
+
+{% block content %}
+<main class="landing">
+  <section class="hero-card">
+    <span class="brand-pill">Step 6 of 12</span>
+
+    <img
+      src="{{ url_for('static', filename='images/Riruru_thinking.svg') }}"
+      alt="Riruru thinking"
+      class="riruru"
+    />
+
+    <h1>How would you describe your current level?</h1>
+    <p class="subtitle">Your answer helps Raah generate your personalized roadmap.</p>
+
+    {% if error %}
+      <p class="small-note error-text">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST" action="/onboarding/step-6">
+      <div class="form-stack">
+        <select name="skill_lvl" class="form-control" required>
+          <option value="">Select one</option>
+          <option value="beginner">Complete Beginner - never written a code</option>
+          <option value="basics-done">Basics done — know fundamentals, haven't built anything real</option>
+          <option value="build-project">Built a project or two — feel lost on what's next</option>
+          <option value="intermediate">Intermediate - know what i'm doing just need directions</option>
+        </select>
+
+        <button class="btn-primary" type="submit">Continue</button>
+      </div>
+    </form>
+  </section>
+</main>
+{% endblock %}

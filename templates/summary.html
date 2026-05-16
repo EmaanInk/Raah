@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Raah — Summary{% endblock %}
+
+{% block content %}
+<main class="landing">
+  <section class="hero-card summary-card">
+    <span class="brand-pill">Onboarding Summary</span>
+
+    <img
+      src="{{ url_for('static', filename='images/Riruru_celebrating.svg') }}"
+      alt="Riruru celebrating"
+      class="riruru summary-riruru"
+    />
+
+    <h1>Your Profile So Far</h1>
+    <p class="subtitle">Check if this looks right before we generate your roadmap.</p>
+
+    <div class="summary-list">
+      <p><strong>Name:</strong> {{ data.get('name', 'Not set') }}</p>
+      <p><strong>Track:</strong> {{ data.get('track', 'Not set') }}</p>
+      <p><strong>Hours/week:</strong> {{ data.get('hrs_per_week', 'Not set') }}</p>
+      <p><strong>Time horizon:</strong> {{ data.get('time_horizon', 'Not set') }}</p>
+      <p><strong>Study year:</strong> {{ data.get('study_year', 'Not set') }}</p>
+      <p><strong>Skill level:</strong> {{ data.get('skill_lvl', 'Not set') }}</p>
+      <p><strong>Goal for 3 months:</strong> {{ data.get('goal_3_months', 'Not set') }}</p>
+      <p><strong>Learning Style:</strong> {{ data.get('learning_style', 'Not set') }}</p>
+      <p><strong>Biggest fear:</strong> {{ data.get('biggest_fear', 'Not set') }}</p>
+      <p><strong>Consistency style:</strong> {{ data.get('consistency_style', 'Not set') }}</p>
+      <p><strong>Guidance Tone:</strong> {{ data.get('guidance_tone', 'Not set') }} </p>
+    </div>
+
+    <div class="hero-actions" style="margin-top:16px;">
+      <a href="/onboarding/step-1" class="btn-outline">Edit Answers</a>
+      <a href="/roadmap" class="btn-primary">Generate My Roadmap</a>
+    </div>
+  </section>
+</main>
+{% endblock %}

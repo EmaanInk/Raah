@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Raah — Step 5{% endblock %}
+
+{% block content %}
+<main class="landing">
+  <section class="hero-card">
+    <span class="brand-pill">Step 5 of 12</span>
+
+    <img
+      src="{{ url_for('static', filename='images/Riruru_happy.svg') }}"
+      alt="Riruru happy"
+      class="riruru"
+    />
+
+    <h1>Which stage are you in right now?</h1>
+    <p class="subtitle">Your year helps Raah adjust urgency and depth.</p>
+
+    {% if error %}
+      <p class="small-note error-text">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST" action="/onboarding/step-5">
+      <div class="form-stack">
+        <select name="study_year" class="form-control" required>
+          <option value="">Select one</option>
+          <option value="first-year">1st year</option>
+          <option value="second-year">2nd year</option>
+          <option value="third-year">3rd year</option>
+          <option value="final-year">Final year</option>
+          <option value="graduate">Graduate / Other</option>
+        </select>
+
+        <button class="btn-primary" type="submit">Continue</button>
+      </div>
+    </form>
+  </section>
+</main>
+{% endblock %}

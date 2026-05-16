@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Raah — Step 7{% endblock %}
+
+{% block content %}
+<main class="landing">
+  <section class="hero-card">
+    <span class="brand-pill">Step 7 of 12</span>
+
+    <img
+      src="{{ url_for('static', filename='images/Riruru_thinking.svg') }}"
+      alt="Riruru thinking"
+      class="riruru"
+    />
+
+    <h1>What do you want to achieve in the next 3 months</h1>
+    <p class="subtitle">Your answer helps Raah generate your personalized roadmap.</p>
+
+    {% if error %}
+      <p class="small-note error-text">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST" action="/onboarding/step-7">
+      <div class="form-stack">
+        <select name="goal_3_months" class="form-control" required>
+          <option value="">Select one</option>
+          <option value="internship">Get Internship ready</option>
+          <option value="portfolio">Build a Strong Portfolio</option>
+          <option value="fundamentals">Master the fundamentals</option>
+          <option value="semester">Survive semester + grow steadily</option>
+          <option value="not-sure">I'm not sure yet</option>
+        </select>
+
+        <button class="btn-primary" type="submit">Continue</button>
+      </div>
+    </form>
+  </section>
+</main>
+{% endblock %}

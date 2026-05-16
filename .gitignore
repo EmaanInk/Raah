@@ -1,0 +1,4 @@
+flask_sessions/
+.env
+__pycache__/
+*.pyc

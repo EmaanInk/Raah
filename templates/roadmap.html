@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Raah — Your Roadmap{% endblock %}
+
+{% block content %}
+<main class="dashboard">
+
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <img src="{{ url_for('static', filename='images/Riruru_happy.svg') }}" 
+            class="topbar-riruru" alt="Riruru" id="riruruTopImg"/>
+        <div class="riruru-bubble" id="riruruBubble">
+        Hi {{ data.name }}! I built this just for you. Let's go! 🗺️
+      </div>
+    </div>
+    <a href="{{ url_for('save_progress') }}" class="btn-outline" style="font-size:13px; padding:8px 14px;">
+  💾 Save Progress
+</a>
+    <div class="xp-bar-wrap">
+      <span class="xp-label">⚡ {{ xp }} XP</span>
+      <div class="xp-bar">
+        {# Logic: Use 0 if XP is 0, otherwise calculate the % of the current 100-point level #}
+        {% set display_percentage = (xp % 100) if xp > 0 else 0 %}
+        <div class="xp-fill" id="xpFill" style="width: {{ display_percentage }}%;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="weeks-grid">
+    {% for week in weeks %}
+      {% set is_locked = week.number > current_active_week %}
+      
+      <div class="week-card {{ 'locked' if is_locked else 'active-week' }}" id="week-{{ week.number }}">
+        <div class="week-header">
+          <span class="week-badge">Week {{ week.number }}</span>
+          <h2 class="week-title">{{ week.title }}</h2>
+        </div>
+
+        <div class="week-preview">
+          <p>{{ week.note[:120] }}...</p> 
+        </div>
+
+        {% if not is_locked %}
+          <a href="{{ url_for('week_focus', num=week.number) }}" class="btn-primary">
+              Enter Week {{ week.number }} ➔
+          </a>
+        {% else %}
+          <div class="lock-indicator">
+            <span>🔒 Locked</span>
+            <small>Complete previous weeks to unlock</small>
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="reaction-popup hidden" id="reactionPopup">
+    <img src="{{ url_for('static', filename='images/Riruru_celebrating.svg') }}" 
+         class="popup-riruru" alt="Riruru celebrating"/>
+    <p id="reactionText"></p>
+    <button onclick="closeReaction()" class="btn-primary">Keep going! 🚀</button>
+  </div>
+  <div class="popup-overlay hidden" id="popupOverlay"></div>
+
+</main>
+{% endblock %}

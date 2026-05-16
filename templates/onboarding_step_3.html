@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Raah — Step 3{% endblock %}
+
+{% block content %}
+<main class="landing">
+  <section class="hero-card">
+    <span class="brand-pill">Step 3 of 12</span>
+
+    <img
+      src="{{ url_for('static', filename='images/Riruru_happy.svg') }}"
+      alt="Riruru guide"
+      class="riruru"
+    />
+
+    <h1>How many hours per week can you realistically give?</h1>
+    <p class="subtitle">how many hours you can give to your future? No pressure.</p>
+{% if error %}
+  <p class="small-note error-text">{{ error }}</p>
+{% endif %}
+
+<form method="POST" action="/onboarding/step-3">
+  <div class="form-stack">
+    <select name="hrs_per_week" class="form-control" required>
+      <option value="">Select one</option>
+      <option value="3-5">3-5</option>
+      <option value="6-10">6-10</option>
+      <option value="11-15">11-15</option>
+      <option value="16+">16+</option>
+    </select>
+
+    <button class="btn-primary" type="submit">Continue</button>
+  </div>
+</form>
+    
+
+    <p class="small-note">You can refine this later, just choose your pace. No Judgement!</p>
+  </section>
+</main>
+{% endblock %}

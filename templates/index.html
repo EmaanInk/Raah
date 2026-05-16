@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raah — Your Path, Your Pace</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <main class="landing">
+    <section class="hero-card">
+      <span class="brand-pill">Riruru</span>
+        <div class="riruru-wrap" id="riruruWrap">
+  <img
+    src="{{ url_for('static', filename='images/Riruru_happy.svg') }}"
+    alt="Riruru welcoming you to Raah"
+    class="riruru"
+  />
+</div>
+      
+      <h1>Welcome to Raah</h1>
+      <p class="subtitle">
+        I’m Riruru. I’ll help you find your path.
+      </p>
+
+      <div class="hero-actions">
+        <button id="startBtn" class="btn-primary" type="button">Start My Journey</button>
+        <button id="aboutBtn" class="btn-outline" type="button">What is Raah?</button>
+        <a href="{{ url_for('restore') }}" class="btn-outline">
+  Restore Progress
+</a>
+      </div>
+
+      <p class="small-note">No pressure. Just one step at a time.</p>
+    </section>
+  </main>
+
+  <!-- Intro Modal -->
+  <div id="introModal" class="modal hidden" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="introTitle">
+      <button id="closeModal" class="close-btn" aria-label="Close modal">&times;</button>
+
+      <img
+        src="{{ url_for('static', filename='images/Riruru_thinking.svg') }}"
+        alt="Riruru guide"
+        class="riruru modal-riruru"
+      />
+
+      <h2 id="introTitle">Hi, I’m Riruru!</h2>
+        <p id="riruruIntroText">
+    I’m your guide in Raah. I’ll ask a few calm questions and create a
+    weekly plan with clear tasks, realistic pace, and progress you can feel.
+    </p>
+        
+
+      <div class="hero-actions">
+        <a href="/onboarding/step-1" class="btn-primary">Let’s Begin</a>
+        <button id="laterBtn" class="btn-outline" type="button">Maybe later</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- About Modal -->
+  <div id="aboutModal" class="modal hidden" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="aboutTitle">
+      <button id="closeAboutModal" class="close-btn" aria-label="Close modal">&times;</button>
+
+      <img
+        src="{{ url_for('static', filename='images/Riruru_celebrating.svg') }}"
+        alt="Riruru celebrating"
+        class="riruru modal-riruru"
+      />
+
+      <h2 id="aboutTitle">What is Raah?</h2>
+      <p>
+        Raah is your roadmap mentor. Instead of generic advice, it gives you
+        weekly direction, explains why each step matters, and helps you stay consistent.
+      </p>
+
+      <div class="hero-actions">
+        <button id="backBtn" class="btn-primary" type="button">Got it</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

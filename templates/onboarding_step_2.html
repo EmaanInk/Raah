@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Raah — Step 2{% endblock %}
+
+{% block content %}
+<main class="landing">
+  <section class="hero-card">
+    <span class="brand-pill">Step 2 of 12</span>
+
+    <img
+      src="{{ url_for('static', filename='images/Riruru_happy.svg') }}"
+      alt="Riruru guide"
+      class="riruru"
+    />
+
+    <h1>Which track do you want?</h1>
+    <p class="subtitle">Choose the path you want Raah to focus on.</p>
+{% if error %}
+  <p class="small-note error-text">{{ error }}</p>
+{% endif %}
+
+<form method="POST" action="/onboarding/step-2">
+  <div class="form-stack">
+    <select name="track" class="form-control" required>
+      <option value="">Select one</option>
+      <option value="software">Software</option>
+      <option value="ai-ml">AI / ML</option>
+      <option value="data-science">Data Science</option>
+      <option value="web-development">Web Development</option>
+      <option value="cybersecurity">Cybersecurity</option>
+      <option value="interview">Interview Prep</option>
+    </select>
+
+    <button class="btn-primary" type="submit">Continue</button>
+  </div>
+</form>
+    
+
+    <p class="small-note">You can refine this later, just choose your current direction.</p>
+  </section>
+</main>
+{% endblock %}

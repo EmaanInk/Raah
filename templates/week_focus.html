@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}Week {{ week.number }} — Raah{% endblock %}
+
+{% block content %}
+<main class="week-container">
+    <div class="week-nav">
+        <a href="{{ url_for('roadmap') }}" class="back-link">← Back to Roadmap</a>
+        <span class="week-indicator">Week {{ week.number }} of your journey</span>
+    </div>
+
+    <section class="week-card-large">
+        <div class="week-header">
+            <h1>{{ week.title }}</h1>
+            <div class="riruru-note">
+                <img src="{{ url_for('static', filename='images/Riruru_happy.svg') }}" alt="Riruru">
+                <p>"{{ week.note }}"</p>
+            </div>
+        </div>
+
+        <div class="tasks-section">
+            <h3>Your Tasks for this week:</h3>
+            <ul class="task-list">
+                {% for i, task in enumerate(week.tasks) %}
+                {% set task_id = i|string %}
+                {% set is_done = completed_tasks.get(week.number|string) and task_id in completed_tasks.get(week.number|string) %}
+                
+                <li class="task-item {{ 'completed' if is_done }}">
+                    <label class="checkbox-container">
+                        <input type="checkbox" 
+                            onchange="completeTask('{{ week.number }}', '{{ i }}', '{{ task|replace("'", "\\'") }}', '{{ week.title|replace("'", "\\'") }}')"
+                            {{ 'checked disabled' if is_done }}>
+                        <span class="checkmark"></span>
+                        <span class="task-text">{{ task }}</span>
+                    </label>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="proof-section">
+            <h4>💡 Your Proof of Work</h4>
+            <p>{{ week.proof }}</p>
+        </div>
+
+        <div class="fallback-section">
+            <small><strong>If you fall behind:</strong> {{ week.fallback }}</small>
+        </div>
+    </section>
+</main>
+<script>
+async function completeTask(weekNum, taskIndex, taskText, weekTitle) {
+    const res = await fetch('/complete-task', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ week: weekNum, task_index: taskIndex })
+    });
+
+    if (res.ok) {
+        const data = await res.json();
+        
+        // Check if all tasks in this week are done
+        const allCheckboxes = document.querySelectorAll('input[type="checkbox"]')
+        const allChecked = Array.from(allCheckboxes).every(cb => cb.checked)
+        
+        if (allChecked) {
+            // Unlock next week
+            await fetch('/unlock-next-week', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'}
+            })
+        }
+
+        // Get Riruru reaction
+        const reactionRes = await fetch('/riruru-reaction', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ task: taskText, week_title: weekTitle })
+        });
+        const reactionData = await reactionRes.json();
+        showReaction(reactionData.reaction);
+    }
+}
+
+function showReaction(text) {
+    document.getElementById('reactionText').textContent = text;
+    document.getElementById('reactionPopup').classList.remove('hidden');
+    document.getElementById('popupOverlay').classList.remove('hidden');
+}
+
+function closeReaction() {
+    document.getElementById('reactionPopup').classList.add('hidden');
+    document.getElementById('popupOverlay').classList.add('hidden');
+    location.reload();
+}
+</script>
+
+<!-- Reaction popup HTML -->
+<div class="reaction-popup hidden" id="reactionPopup">
+    <img src="{{ url_for('static', filename='images/Riruru_celebrating.svg') }}"
+        class="popup-riruru" alt="Riruru celebrating"/>
+    <p id="reactionText"></p>
+    <button onclick="closeReaction()" class="btn-primary">Keep going! 🚀</button>
+</div>
+<div class="popup-overlay hidden" id="popupOverlay"></div>
+
+{% endblock %}
